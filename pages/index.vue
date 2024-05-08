@@ -3,7 +3,6 @@ import { ref, computed } from "vue";
 
 let id = 0
 
-const message = ref('Danh Sách Các Việc Cần Làm')
 const newTodo = ref('')
 const hideCompleted = ref(false)
 const todos = ref([
@@ -48,30 +47,36 @@ function getTodoClass(todo) {
 
 
 <template>
-    <div class="bg-white-400 w-full h-screen flex flex-col justify-center items-center">
-        <div class="p-10 bg-white shadow-xl border rounded-xl text-black">
+    <div class="bg-blue-200 w-full h-screen flex flex-col justify-center items-center">
 
-            <h1 class="text-center text-4xl text-black-600 font-bold">{{ message }}</h1>
+        <div class="p-24 w-4/5 bg-white shadow-2xl border rounded-3xl">
 
+            <h1 class="h-14 w-30 text-4xl bg-white-400 text-left font-bold ">Todo App</h1><br>
 
-            <form class="text-center" @submit.prevent="addTodo">
-                <input v-model="newTodo" required placeholder="Thêm công việc">
-                <button>Thêm</button>
-            </form>
+            <form class="flex" @submit.prevent="addTodo">
+                <input class="text-left w-full font-bold" v-model="newTodo" required placeholder="Add your new todo">
+                <button class="bg-blue-500 text-white p-4 font-bold text-2xl rounded-2xl">+</button>
+            </form><br>
 
             <ul>
-                <li class="text-center space-x-9" v-for="todo in filteredTodos" :key="todo.id">
-                    <span class="!text-black " :class="getTodoClass(todo)">{{ todo.text }}</span>
-                    <button class="text-red-600" @click="removeTodo(todo)"> Xóa </button>
-                    <input type="checkbox" v-model="todo.done">
+
+                <li v-for="todo in filteredTodos" :key="todo.id">
+
+                    <div class="flex font-bold bg-gray-100">
+                        <span class="!text-black" :class="getTodoClass(todo)">{{ todo.text }}</span>
+                        <button class="text-white item-center bg-red-500 rounded" @click="removeTodo(todo)"> Xóa
+                        </button>
+                        <input type="checkbox" v-model="todo.done">
+                    </div>
                 </li>
-            </ul>
+            </ul><br>
 
             <div class="text-center">
-                <button @click="hideCompleted = !hideCompleted">
+                <button class="bg-blue-500 text-white p-2 rounded" @click="hideCompleted = !hideCompleted">
                     {{ hideCompleted ? 'Hiển Thị Tất Cả' : 'Ẩn Việc Đã Làm' }}
                 </button>
             </div>
         </div>
     </div>
+
 </template>
