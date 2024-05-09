@@ -15,9 +15,8 @@ const board = [
 
 <template>
 
-    < class="flex flex-col justify-center items-center bg-cyan-950 h-screen">
+    <div class="flex flex-col justify-center items-center bg-cyan-950 h-screen">
         <div class="flex flex-col justify-center items-center h-3xl w-3xl text-center">
-
             <div class="text-4xl mb-15 font-bold">TIC TAC TOE</div>
 
             <div class="border border-white border-2 rounded-xl p-5 shadow">
@@ -32,4 +31,5 @@ const board = [
                 </div>
             </div>
         </div>
+    </div>
 </template>
