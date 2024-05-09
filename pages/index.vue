@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed } from "vue";
 
-let id = 0
+let id = 1
 
 const newTodo = ref('')
 const hideCompleted = ref(false)

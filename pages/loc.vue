@@ -20,7 +20,7 @@ const board = [
 
             <div class="text-4xl mb-15 font-bold">TIC TAC TOE</div>
 
-            <div class="border border-white border-2 rounded-xl p-5 shadow">
+            <div class="border-white border-2 rounded-xl p-5 shadow">
 
                 <div class="text-center mb-15 text-2xl  ">Luot Nguoi Choi 'X'
                     <div
