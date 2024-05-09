@@ -30,11 +30,6 @@ function removeTodo(todo) {
     todos.value = todos.value.filter((t) => t !== todo)
 }
 
-// function lineThrough(todo) {
-//     console.log("line throufgh cline", todo);
-//     todo.done = !todo.done
-//}
-
 function getTodoClass(todo) {
     if (todo.done) {
         return 'line-through'
