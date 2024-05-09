@@ -47,34 +47,38 @@ function getTodoClass(todo) {
 
 
 <template>
-    <div class="bg-blue-200 w-full h-screen flex flex-col justify-center items-center">
+    <div class="bg-blue-200 h-screen flex flex-col justify-center items-center">
 
-        <div class="p-24 w-4/5 bg-white shadow-2xl border rounded-3xl">
-
-            <h1 class="h-14 w-30 text-4xl bg-white-400 text-left font-bold ">Todo App</h1><br>
-
-            <form class="flex" @submit.prevent="addTodo">
-                <input class="text-left w-full font-bold" v-model="newTodo" required placeholder="Add your new todo">
-                <button class="bg-blue-500 text-white p-4 font-bold text-2xl rounded-2xl">+</button>
+        <div class="container mx-auto p-4 bg-white">
+            <h1 class=" text-3xl px-10 text-left font-bold ">Todo App</h1><br>
+            <form class="flex flex-row px-10 gap-2 " @submit.prevent="addTodo">
+                <input class=" bg-slate-300 text-right px-6 w-full font-bold" v-model="newTodo" required
+                    placeholder="Add your new todo">
+                <button class="bg-blue-500 text-white p-4 font-bold text-2xl">+</button>
             </form><br>
 
             <ul>
 
                 <li v-for="todo in filteredTodos" :key="todo.id">
 
-                    <div class="flex font-bold bg-gray-100">
-                        <span class="!text-black" :class="getTodoClass(todo)">{{ todo.text }}</span>
-                        <button class="text-white item-center bg-red-500 rounded" @click="removeTodo(todo)"> Xóa
-                        </button>
-                        <input type="checkbox" v-model="todo.done">
+                    <div class="flex flex-col h-auto w-full px-10">
+                        <div class="flex items-center mb-3">
+                            <input type="checkbox" class="mr-2 flex-grow-0" v-model="todo.done">
+                            <span class="!text-black font-bold text-start flex-grow word-break-all"
+                                :class="getTodoClass(todo)">{{
+                                    todo.text }}
+                            </span>
+                            <button class="text-white bg-blue-500 rounded mr-5 flex-grow-0 w-16"
+                                @click="removeTodo(todo)">Delete</button>
+                        </div>
                     </div>
                 </li>
-            </ul><br>
-
-            <div class="text-center">
-                <button class="bg-blue-500 text-white p-2 rounded" @click="hideCompleted = !hideCompleted">
-                    {{ hideCompleted ? 'Hiển Thị Tất Cả' : 'Ẩn Việc Đã Làm' }}
-                </button>
+            </ul>
+            <br>
+            <div class="text-end px-10 ">
+                <button class="bg-green-500 text-white p-2 rounded mr-2" @click="hideCompleted = false">Show
+                    All</button>
+                <button class="bg-blue-500 text-white p-2 rounded " @click="hideCompleted = true">Hide</button>
             </div>
         </div>
     </div>
