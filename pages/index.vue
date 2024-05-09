@@ -6,9 +6,9 @@ let id = 0
 const newTodo = ref('')
 const hideCompleted = ref(false)
 const todos = ref([
-    { id: id++, text: 'Viec 1', done: false },
-    { id: id++, text: 'Viec 2', done: false },
-    { id: id++, text: 'Viec 3', done: false },
+    { id: id++, text: 'Nấu Cơm', done: false },
+    { id: id++, text: 'Rửa Bát', done: false },
+    { id: id++, text: 'Quét Nhà', done: false },
     { id: id++, text: 'Viec 4', done: false },
     { id: id++, text: 'Viec 5', done: false },
 ])
