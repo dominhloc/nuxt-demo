@@ -10,11 +10,13 @@ const todos = ref([
     { id: 3, text: "Công Việc 3", done: false },
     { id: 4, text: "Công Việc 4", done: false },
     { id: 5, text: "Công Việc 5", done: false },
+    { id: 5, text: "Công Việc 6", done: false }
 ]);
 
 const filteredTodos = computed(() => {
     return hideCompleted.value ? todos.value.filter((t) => !t.done) : todos.value;
 });
+console.log("🚀 ~ filteredTodos ~ filteredTodos:", filteredTodos)
 
 function addTodo() {
     let newIndex = todos.value.length + 1
