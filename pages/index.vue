@@ -1,35 +1,39 @@
-<script setup lang="ts">
+<script setup>
 import { ref, computed } from "vue";
 
 const newTodo = ref("");
 const hideCompleted = ref(false);
 
-const data = await useAsyncData("item", () =>
-  $fetch("https://6642ea4a3c01a059ea20c7c2.mockapi.io/todos")
-);
-
 const todos = ref([
-  { id: 1, text: "Công Việc 1", done: false, favorites: false },
-  { id: 2, text: "Công Việc 2", done: false, favorites: false },
-  { id: 3, text: "Công Việc 3", done: false, favorites: false },
-  { id: 4, text: "Công Việc 4", done: false, favorites: false },
-  { id: 5, text: "Công Việc 5", done: false, favorites: false },
+  //   { id: 1, text: "Công Việc 1", done: false, favorites: false },
+  //   { id: 2, text: "Công Việc 2", done: false, favorites: false },
+  //   { id: 3, text: "Công Việc 3", done: false, favorites: false },
+  //   { id: 4, text: "Công Việc 4", done: false, favorites: false },
+  //   { id: 5, text: "Công Việc 5", done: false, favorites: false },
 ]);
+
 const todos_old = ref([]); // giữ lại giá trị mảng cũ
 let check_favorite = false; // khai báo biến check favorite = false
 
 // mock API
-const dataTwice = await $fetch(
-  "https://6642ea4a3c01a059ea20c7c2.mockapi.io/todo"
-);
-console.log("🚀 ~ dataTwice:", dataTwice);
+$fetch("https://6642ea4a3c01a059ea20c7c2.mockapi.io/TODOLIST").then((x) => {
+  todos.value = x;
+  console.log(x);
+});
 
 //code tính năng update dùng hàm POSH
-function contactForm() {
-  $fetch("https://6642ea4a3c01a059ea20c7c2.mockapi.io/todo", {
-    method: "POST",
-    body: { text: "" },
-  });
+async function contactForm() {
+  const res = await $fetch(
+    "https://6642ea4a3c01a059ea20c7c2.mockapi.io/TODOLIST",
+    {
+      method: "POST",
+      body: { text: newTodo.value },
+    }
+  );
+  newTodo.value = "";
+  todos.value = await $fetch(
+    "https://6642ea4a3c01a059ea20c7c2.mockapi.io/TODOLIST"
+  );
 }
 
 //
@@ -39,22 +43,23 @@ const filteredTodos = computed(() => {
 //console.log("🚀 ~ filteredTodos ~ filteredTodos:", filteredTodos);
 
 function addTodo() {
-  let newIndex = todos.value.length + 1;
-  todos.value.push({
-    id: newIndex,
-    text: newTodo.value,
-    done: false,
-    favorites: false,
-  });
-  //console.log(todos.value);
-  //xóa input đầu vào
-  newTodo.value = "";
+  // let newIndex = todos.value.length + 1;
+  // todos.value.push({
+  //   id: newIndex,
+  //   text: newTodo.value,
+  //   done: false,
+  //   favorites: false,
+  // });
+  // //console.log(todos.value);
+  // //xóa input đầu vào
+  // newTodo.value = "";
 }
 
 function removeTodo(todo) {
-  let x = todos.value.filter((t) => t.id !== todo.id); //todo.id = giá trị của id
-  //console.log("🚀 ~ todo.id:", todo.id)
-  todos.value = x;
+  console.log("🚀 ~ todo:", todo);
+  // let x = todos.value.filter((t) => t.id !== todo.id); //todo.id = giá trị của id
+  // //console.log("🚀 ~ todo.id:", todo.id)
+  // todos.value = x;
   //console.log("🚀 ~ todos.value:", todos.value);
 }
 
@@ -191,7 +196,7 @@ function showFavorites() {
           class="bg-blue-500 hover:bg-blue-600 duration-500 text-white p-1 rounded-xl w-20"
           @click="contactForm"
         >
-          Save
+          Push
         </button>
       </div>
     </div>
