@@ -1,8 +1,12 @@
-<script setup>
+<script setup lang="ts">
 import { ref, computed } from "vue";
 
 const newTodo = ref("");
 const hideCompleted = ref(false);
+
+const data = await useAsyncData("item", () =>
+  $fetch("https://6642ea4a3c01a059ea20c7c2.mockapi.io/todos")
+);
 
 const todos = ref([
   { id: 1, text: "Công Việc 1", done: false, favorites: false },
@@ -10,21 +14,25 @@ const todos = ref([
   { id: 3, text: "Công Việc 3", done: false, favorites: false },
   { id: 4, text: "Công Việc 4", done: false, favorites: false },
   { id: 5, text: "Công Việc 5", done: false, favorites: false },
-  { id: 6, text: "Công Việc 6", done: false, favorites: false },
 ]);
 const todos_old = ref([]); // giữ lại giá trị mảng cũ
 let check_favorite = false; // khai báo biến check favorite = false
 
-const { data } = await useFetch(
-  "https://6642ea4a3c01a059ea20c7c2.mockapi.io/todos"
+// mock API
+const dataTwice = await $fetch(
+  "https://6642ea4a3c01a059ea20c7c2.mockapi.io/todo"
 );
-console.log("🚀 ~ data:", data);
+console.log("🚀 ~ dataTwice:", dataTwice);
 
-// const dataTwice = await $fetch(
-//   "https://6642ea4a3c01a059ea20c7c2.mockapi.io/todos"
-// );
-// console.log("🚀 ~ dataTwice:", dataTwice);
+//code tính năng update dùng hàm POSH
+function contactForm() {
+  $fetch("https://6642ea4a3c01a059ea20c7c2.mockapi.io/todo", {
+    method: "POST",
+    body: { text: "" },
+  });
+}
 
+//
 const filteredTodos = computed(() => {
   return hideCompleted.value ? todos.value.filter((t) => !t.done) : todos.value;
 });
@@ -38,7 +46,7 @@ function addTodo() {
     done: false,
     favorites: false,
   });
-  console.log(todos.value);
+  //console.log(todos.value);
   //xóa input đầu vào
   newTodo.value = "";
 }
@@ -47,7 +55,7 @@ function removeTodo(todo) {
   let x = todos.value.filter((t) => t.id !== todo.id); //todo.id = giá trị của id
   //console.log("🚀 ~ todo.id:", todo.id)
   todos.value = x;
-  console.log("🚀 ~ todos.value:", todos.value);
+  //console.log("🚀 ~ todos.value:", todos.value);
 }
 
 function deleteAll() {
@@ -166,18 +174,24 @@ function showFavorites() {
         >
           Hide
         </button>
-        <button
+        <!-- <button
           class="bg-gray-500 hover:bg-gray-600 duration-500 text-white p-1 rounded-xl w-20"
           @click="deleteAll"
         >
           Delete All
-        </button>
+        </button> -->
 
         <button
           class="bg-red-500 hover:bg-red-600 duration-500 text-white p-1 rounded-xl w-20"
           @click="showFavorites"
         >
           Favorites
+        </button>
+        <button
+          class="bg-blue-500 hover:bg-blue-600 duration-500 text-white p-1 rounded-xl w-20"
+          @click="contactForm"
+        >
+          Save
         </button>
       </div>
     </div>
