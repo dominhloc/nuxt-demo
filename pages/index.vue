@@ -36,31 +36,44 @@ async function contactForm() {
   );
 }
 
-//
 const filteredTodos = computed(() => {
   return hideCompleted.value ? todos.value.filter((t) => !t.done) : todos.value;
 });
 //console.log("🚀 ~ filteredTodos ~ filteredTodos:", filteredTodos);
 
-function addTodo() {
-  // let newIndex = todos.value.length + 1;
-  // todos.value.push({
-  //   id: newIndex,
-  //   text: newTodo.value,
-  //   done: false,
-  //   favorites: false,
-  // });
-  // //console.log(todos.value);
-  // //xóa input đầu vào
-  // newTodo.value = "";
-}
+// function addTodo() {
+//   let newIndex = todos.value.length + 1;
+//   todos.value.push({
+//     id: newIndex,
+//     text: newTodo.value,
+//     done: false,
+//     favorites: false,
+//   });
+//   //console.log(todos.value);
+//   //xóa input đầu vào
+//   newTodo.value = "";
+//}
 
-function removeTodo(todo) {
-  console.log("🚀 ~ todo:", todo);
-  let x = todos.value.filter((t) => t.id !== todo.id); //todo.id = giá trị của id
-  // //console.log("🚀 ~ todo.id:", todo.id)
-  todos.value = x;
-  //console.log("🚀 ~ todos.value:", todos.value);
+// function removeTodo(todo) {
+//   console.log("🚀 ~ todo:", todo);
+//   let x = todos.value.filter((t) => t.id !== todo.id); //todo.id = giá trị của id
+//   // //console.log("🚀 ~ todo.id:", todo.id)
+//   todos.value = x;
+//   //console.log("🚀 ~ todos.value:", todos.value);
+//}
+
+async function removeTodo(todo) {
+  const res = await $fetch(
+    "https://6642ea4a3c01a059ea20c7c2.mockapi.io/TODOLIST//${todo.id}",
+    {
+      method: "DELETE",
+    }
+  );
+  if (res) {
+    todos.value = todos.value.filter((todo) => todo.id !== todo.id);
+  } else {
+    console.error("Failed to delete the todo");
+  }
 }
 
 // function deleteAll() {
@@ -112,7 +125,7 @@ function showFavorites() {
       <h1 class="text-3xl text-center font-bold hover:bg-gray-300 duration-500">
         Todo App
       </h1>
-      <form class="flex flex-row shadow" @submit.prevent="addTodo">
+      <form class="flex flex-row shadow" @submit.prevent="contactForm()">
         <input
           class="text-left shadow-md px-6 w-full border-2 font-bold rounded-xl h-14"
           v-model="newTodo"
@@ -191,12 +204,6 @@ function showFavorites() {
           @click="showFavorites"
         >
           Favorites
-        </button>
-        <button
-          class="bg-blue-500 hover:bg-blue-600 duration-500 text-white p-1 rounded-xl w-20"
-          @click="contactForm"
-        >
-          Push
         </button>
       </div>
     </div>
