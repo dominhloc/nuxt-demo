@@ -30,25 +30,25 @@ export default {
     </div>
 </template> -->
 <template>
-    <div>
-        <button @click="toggleVisibility">
-            {{ isVisible ? 'Ẩn' : 'Hiện' }} nội dung
-        </button>
-        <p v-if="isVisible">Nội dung được hiển thị</p>
-    </div>
+  <div>
+    <button @click="toggleVisibility">
+      {{ isVisible ? "Ẩn" : "Hiện" }} nội dung
+    </button>
+    <p v-if="isVisible">Nội dung được hiển thị</p>
+  </div>
 </template>
 
 <script>
 export default {
-    data() {
-        return {
-            isVisible: false,
-        };
+  data() {
+    return {
+      isVisible: false,
+    };
+  },
+  methods: {
+    toggleVisibility() {
+      this.isVisible = !this.isVisible;
     },
-    methods: {
-        toggleVisibility() {
-            this.isVisible = !this.isVisible;
-        },
-    },
+  },
 };
 </script>
