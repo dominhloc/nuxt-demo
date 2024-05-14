@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed } from "vue";
 
-const newTodo = ref("");
+const newtodo = ref("");
 const hideCompleted = ref(false);
 
 const todos = ref([
@@ -18,7 +18,7 @@ let check_favorite = false; // khai báo biến check favorite = false
 // mock API
 $fetch("https://6642ea4a3c01a059ea20c7c2.mockapi.io/TODOLIST").then((x) => {
   todos.value = x;
-  console.log(x);
+  //console.log(x);
 });
 
 //code tính năng update dùng hàm POSH
@@ -27,69 +27,71 @@ async function contactForm() {
     "https://6642ea4a3c01a059ea20c7c2.mockapi.io/TODOLIST",
     {
       method: "POST",
-      body: { text: newTodo.value },
+      body: { text: newtodo.value },
     }
   );
-  newTodo.value = "";
+  newtodo.value = "";
   todos.value = await $fetch(
     "https://6642ea4a3c01a059ea20c7c2.mockapi.io/TODOLIST"
   );
 }
 
-const filteredTodos = computed(() => {
+const filteredtodos = computed(() => {
   return hideCompleted.value ? todos.value.filter((t) => !t.done) : todos.value;
 });
-//console.log("🚀 ~ filteredTodos ~ filteredTodos:", filteredTodos);
+//console.log("🚀 ~ filteredtodos ~ filteredtodos:", filteredtodos);
 
-// function addTodo() {
+// function addtodo() {
 //   let newIndex = todos.value.length + 1;
 //   todos.value.push({
 //     id: newIndex,
-//     text: newTodo.value,
+//     text: newtodo.value,
 //     done: false,
 //     favorites: false,
 //   });
 //   //console.log(todos.value);
 //   //xóa input đầu vào
-//   newTodo.value = "";
+//   newtodo.value = "";
 //}
 
-// function removeTodo(todo) {
+// function removetodo(todo) {
 //   console.log("🚀 ~ todo:", todo);
 //   let x = todos.value.filter((t) => t.id !== todo.id); //todo.id = giá trị của id
 //   // //console.log("🚀 ~ todo.id:", todo.id)
 //   todos.value = x;
 //   //console.log("🚀 ~ todos.value:", todos.value);
-//}
+// }
 
-async function removeTodo(todo) {
+async function removetodo(todo) {
   const res = await $fetch(
-    "https://6642ea4a3c01a059ea20c7c2.mockapi.io/TODOLIST//${todo.id}",
+    "https://6642ea4a3c01a059ea20c7c2.mockapi.io/TODOLIST/${todo.id}",
     {
       method: "DELETE",
+      body: {
+        id: (todos.value = todos.value.filter((t) => t.id !== todo.id)),
+      },
     }
   );
-  if (res) {
-    todos.value = todos.value.filter((todo) => todo.id !== todo.id);
-  } else {
-    console.error("Failed to delete the todo");
-  }
 }
+todos.value = await $fetch(
+  "https://6642ea4a3c01a059ea20c7c2.mockapi.io/TODOLIST"
+);
+//console.log("🚀 ~ todos.value:", todos.value);
 
 // function deleteAll() {
-//   let y = todos.value.filter((t) => t.id === newTodo);
-//   // mảngkhaibáo.value.filter(( giá trị trả về sẽ là t ) => nếu id = với newTodo là tệp rỗng )
+//   let y = todos.value.filter((t) => t.id === newtodo);
+//   // mảngkhaibáo.value.filter(( giá trị trả về sẽ là t ) => nếu id = với newtodo là tệp rỗng )
 //   todos.value = y;
 // }
 
-function getTodoClass(todo) {
+function gettodoClass(todo) {
   if (todo.done) {
-    //console.log("🚀 ~ getTodoClass ~ todo.done:", todo.done)
+    //console.log("🚀 ~ gettodoClass ~ todo.done:", todo.done)
     return "line-through text-blue-600";
   }
 }
 
-function favoritesTodo(todo) {
+function favoritestodo(todo) {
   todo.favorites = !todo.favorites;
   //console.log("🚀 ~ todo:", todo)
 }
@@ -123,12 +125,12 @@ function showFavorites() {
       class="container mx-auto p-4 flex flex-col bg-white h-[600px] w-[450px] space-y-3 rounded-xl justify-between"
     >
       <h1 class="text-3xl text-center font-bold hover:bg-gray-300 duration-500">
-        Todo App
+        todo App
       </h1>
       <form class="flex flex-row shadow" @submit.prevent="contactForm()">
         <input
           class="text-left shadow-md px-6 w-full border-2 font-bold rounded-xl h-14"
-          v-model="newTodo"
+          v-model="newtodo"
           required
           placeholder="Add a new task........ "
         />
@@ -137,7 +139,7 @@ function showFavorites() {
         <div class="flex flex-col space-y-2">
           <div
             class="py-2 border-b flex items-center"
-            v-for="todo in filteredTodos"
+            v-for="todo in filteredtodos"
             :key="todo.id"
           >
             <div class="flex flex-col h-auto w-full px-2">
@@ -150,10 +152,10 @@ function showFavorites() {
                 />
                 <span
                   class="font-bold text-start flex-grow word-break-all"
-                  :class="getTodoClass(todo)"
+                  :class="gettodoClass(todo)"
                   >{{ todo.text }}
                 </span>
-                <button class="flex-grow-0 w-6" @click="removeTodo(todo)">
+                <button class="flex-grow-0 w-6" @click="removetodo(todo)">
                   <img
                     src="https://banner2.cleanpng.com/20180204/tew/kisspng-button-icon-delete-button-png-picture-5a77bb72658409.7623834215177962104158.jpg"
                     class="w-5 h-5 rounded"
@@ -161,7 +163,7 @@ function showFavorites() {
                 </button>
 
                 <!-- tạo ra nút màu đỏ -->
-                <button @click="favoritesTodo(todo)">
+                <button @click="favoritestodo(todo)">
                   <svg
                     class="w-5"
                     :class="todo.favorites ? 'text-red-500' : 'text-black '"
