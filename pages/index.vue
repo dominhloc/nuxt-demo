@@ -57,17 +57,17 @@ function addTodo() {
 
 function removeTodo(todo) {
   console.log("🚀 ~ todo:", todo);
-  // let x = todos.value.filter((t) => t.id !== todo.id); //todo.id = giá trị của id
+  let x = todos.value.filter((t) => t.id !== todo.id); //todo.id = giá trị của id
   // //console.log("🚀 ~ todo.id:", todo.id)
-  // todos.value = x;
+  todos.value = x;
   //console.log("🚀 ~ todos.value:", todos.value);
 }
 
-function deleteAll() {
-  let y = todos.value.filter((t) => t.id === newTodo);
-  // mảngkhaibáo.value.filter(( giá trị trả về sẽ là t ) => nếu id = với newTodo là tệp rỗng )
-  todos.value = y;
-}
+// function deleteAll() {
+//   let y = todos.value.filter((t) => t.id === newTodo);
+//   // mảngkhaibáo.value.filter(( giá trị trả về sẽ là t ) => nếu id = với newTodo là tệp rỗng )
+//   todos.value = y;
+// }
 
 function getTodoClass(todo) {
   if (todo.done) {
