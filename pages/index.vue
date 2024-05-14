@@ -15,7 +15,8 @@ const todos = ref([
 
 ]);
 const todos_old = ref([]); // giữ lại giá trị mảng cũ
-let check_favorite = false
+let check_favorite = false  // khai báo biến check favorite = false
+
 const filteredTodos = computed(() => {
     return hideCompleted.value ? todos.value.filter((t) => !t.done) : todos.value;
 });
@@ -60,12 +61,15 @@ function favoritesTodo(todo) {
     //console.log("🚀 ~ todo:", todo)
 
     //lọc ra các thành phần có fav = true và trả về mảng ban đầu
-    let z = todos.value.filter((todo) => todo.favorites == true)
-    z = todos.value
+    //let z = todos.value.filter((todo) => todo.favorites == true)
+    //z = todos.value
     // console.log("🚀 ~ z:", z)
 }
 
+
+//lọc ra các thành phần có fav = true và trả về mảng ban đầu
 //tạo function mới có chức năng hiện ra những công việc yêu thích
+
 function showFavorites() {
     const list_todo = ref([]);
     if (check_favorite == true) {
@@ -112,6 +116,8 @@ function showFavorites() {
                                         src="https://banner2.cleanpng.com/20180204/tew/kisspng-button-icon-delete-button-png-picture-5a77bb72658409.7623834215177962104158.jpg"
                                         class="w-5 h-5 rounded"></button>
 
+
+                                <!-- tạo ra nút màu đỏ -->
                                 <button @click="favoritesTodo(todo)">
                                     <svg class="w-5" :class="todo.favorites ? 'text-red-500' : 'text-black '"
                                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
