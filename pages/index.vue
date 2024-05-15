@@ -100,16 +100,29 @@ async function removeTodo(todo) {
 // todos.value = undefined;
 //}
 
-function gettodoClass(todo) {  // todo ở đây là param
-  if (todo.done) {
-    //console.log("🚀 ~ gettodoClass ~ todo.done:", todo.done);
-    return "line-through text-blue-600";
-  }
+// function gettodoClass(todo) {
+//   // todo ở đây là param
+//   if (todo.done) {
+//     //console.log("🚀 ~ gettodoClass ~ todo.done:", todo.done);
+//     return "line-through text-blue-600";
+//   } else {
+//     return "text-red-500";
+//   }
+// }
+
+async function gettodoClass(todo) {
+  let id = todo?.id;
+  const res = await $fetch(
+    `https://6642ea4a3c01a059ea20c7c2.mockapi.io/TODOLIST/${id}`,
+    {
+      method: "PUT",
+      body: todo,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
 }
-
-async function gettodoClass(todo)
-
-
 
 async function favoritesTodo(todo) {
   todo.favorites = !todo.favorites; // phương thức đảo ngược
@@ -117,7 +130,7 @@ async function favoritesTodo(todo) {
     `https://6642ea4a3c01a059ea20c7c2.mockapi.io/TODOLIST/${todo?.id}`,
     {
       method: "PUT",
-      body: todo,
+      body: todo.id,
       headers: {
         "Content-Type": "application/json",
       },
@@ -180,10 +193,14 @@ function showFavorites() {
                   v-model="todo.done"
                 />
                 <span
+                  @="gettodoClass(todo)"
                   class="font-bold text-start flex-grow word-break-all"
-                  :class="gettodoClass(todo)"
+                  :class="
+                    todo.done ? 'line-through text-blue-600' : 'text-black'
+                  "
                   >{{ todo.text }}
                 </span>
+
                 <button class="flex-grow-0 w-6" @click="removeTodo(todo)">
                   <img
                     src="https://banner2.cleanpng.com/20180204/tew/kisspng-button-icon-delete-button-png-picture-5a77bb72658409.7623834215177962104158.jpg"
@@ -223,12 +240,12 @@ function showFavorites() {
         >
           Hide
         </button>
-        <button
+        <!-- <button
           class="bg-gray-500 hover:bg-gray-600 duration-500 text-white p-1 rounded-xl w-20"
           @click="deleteAll"
         >
           Delete All
-        </button>
+        </button> -->
 
         <button
           class="bg-red-500 hover:bg-red-600 duration-500 text-white p-1 rounded-xl w-20"
