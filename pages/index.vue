@@ -3,22 +3,21 @@ import { ref, computed } from "vue";
 
 const newtodo = ref("");
 const hideCompleted = ref(false);
-
 const todos = ref([
-  //   { id: 1, text: "Công Việc 1", done: false, favorites: false },
-  //   { id: 2, text: "Công Việc 2", done: false, favorites: false },
-  //   { id: 3, text: "Công Việc 3", done: false, favorites: false },
-  //   { id: 4, text: "Công Việc 4", done: false, favorites: false },
-  //   { id: 5, text: "Công Việc 5", done: false, favorites: false },
+  // { id: 1, text: "Công Việc 1", done: false, favorites: false },
+  // { id: 2, text: "Công Việc 2", done: false, favorites: false },
+  // { id: 3, text: "Công Việc 3", done: false, favorites: false },
+  // { id: 4, text: "Công Việc 4", done: false, favorites: false },
+  // { id: 5, text: "Công Việc 5", done: false, favorites: false },
 ]);
 
 const todos_old = ref([]); // giữ lại giá trị mảng cũ
 let check_favorite = false; // khai báo biến check favorite = false
 
-// mock API
+// hiển thị lên màn hình dữ liệu được trả về từ API
 $fetch("https://6642ea4a3c01a059ea20c7c2.mockapi.io/TODOLIST").then((x) => {
   todos.value = x;
-  //console.log(x);
+  console.log(x);
 });
 
 //code tính năng update dùng hàm POSH
@@ -64,7 +63,7 @@ const filteredtodos = computed(() => {
 
 async function removeTodo(todo) {
   let id = todo?.id;
-  console.log("🚀 ~ id:", id);
+  //console.log("🚀 ~ id:", id);
 
   const res = await $fetch(
     `https://6642ea4a3c01a059ea20c7c2.mockapi.io/TODOLIST/${id}`,
@@ -91,25 +90,21 @@ function gettodoClass(todo) {
   }
 }
 
-// function favoritesTodo(todo) {
-//   todo.favorites = !todo.favorites;
-//   //console.log("🚀 ~ todo:", todo)
-// }
-
 async function favoritesTodo(todo) {
-  let id1 = (todo.favorites = !todo.favorites);
-  //console.log("🚀 ~ id1:", id1);
+  todo.favorites = !todo.favorites; // phương thức đảo ngược
   const res = await $fetch(
-    `https://6642ea4a3c01a059ea20c7c2.mockapi.io/TODOLIST/${id1}`,
+    `https://6642ea4a3c01a059ea20c7c2.mockapi.io/TODOLIST/${todo?.id}`,
     {
       method: "PUT",
-      body: JSON.stringify({ favorites: todos.value }),
+      body: todo,
+      headers: {
+        "Content-Type": "application/json",
+      },
     }
   );
-  todos.value = await $fetch(
+  todos.favorites = await $fetch(
     "https://6642ea4a3c01a059ea20c7c2.mockapi.io/TODOLIST"
   );
-  //console.log(res);
 }
 
 //lọc ra các thành phần có fav = true và trả về mảng ban đầu
@@ -136,7 +131,7 @@ function showFavorites() {
 </script>
 
 <template>
-  <div class="bg-cyan-900 h-screen flex flex-col justify-center items-center">
+  <div class="bg-cyan-500 h-screen flex flex-col justify-center items-center">
     <div
       class="container mx-auto p-4 flex flex-col bg-white h-[600px] w-[450px] space-y-3 rounded-xl justify-between"
     >
@@ -160,7 +155,7 @@ function showFavorites() {
           >
             <div class="flex flex-col h-auto w-full px-2">
               <div class="flex">
-                {{ todo.favorites }}
+                <!-- {{ todo.favorites }} -->
                 <input
                   type="checkbox"
                   class="mr-2 flex-grow-0"
@@ -182,7 +177,7 @@ function showFavorites() {
                 <button @click="favoritesTodo(todo)">
                   <svg
                     class="w-5"
-                    :class="todo.favorites ? 'text-red-500' : 'text-black '"
+                    :class="todo.favorites ? 'text-red-600' : 'text-slate-600 '"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                   >
