@@ -34,11 +34,10 @@ async function contactForm() {
     "https://6642ea4a3c01a059ea20c7c2.mockapi.io/TODOLIST"
   );
 }
-
+//lọc các giá trị mới được thêm vào
 const filteredtodos = computed(() => {
   return hideCompleted.value ? todos.value.filter((t) => !t.done) : todos.value;
 });
-//console.log("🚀 ~ filteredtodos ~ filteredtodos:", filteredtodos);
 
 // function addtodo() {
 //   let newIndex = todos.value.length + 1;
@@ -63,8 +62,7 @@ const filteredtodos = computed(() => {
 
 async function removeTodo(todo) {
   let id = todo?.id;
-  //console.log("🚀 ~ id:", id);
-
+  console.log("🚀 ~ id:", id);
   const res = await $fetch(
     `https://6642ea4a3c01a059ea20c7c2.mockapi.io/TODOLIST/${id}`,
     {
@@ -83,12 +81,35 @@ async function removeTodo(todo) {
 //   todos.value = y;
 // }
 
-function gettodoClass(todo) {
+// dùng for lặp qua từng id rồi xóa
+// async function deleteAll() {
+//   for (let i = 0; i < todos.id.length; i++);
+//   {
+//     x = todos.value;
+//   }
+//   console.log("🚀 ~ deleteAll ~ deleteAll:", x);
+// const res = await $fetch(
+//   `https://6642ea4a3c01a059ea20c7c2.mockapi.io/TODOLIST/${todo?.id}`,
+//   {
+//     method: `DELETE`,
+//   }
+// );
+// todos.value = await $fetch(
+//   "https://6642ea4a3c01a059ea20c7c2.mockapi.io/TODOLIST" // đặt lại mảng ban đầu
+// );
+// todos.value = undefined;
+//}
+
+function gettodoClass(todo) {  // todo ở đây là param
   if (todo.done) {
-    //console.log("🚀 ~ gettodoClass ~ todo.done:", todo.done)
+    //console.log("🚀 ~ gettodoClass ~ todo.done:", todo.done);
     return "line-through text-blue-600";
   }
 }
+
+async function gettodoClass(todo)
+
+
 
 async function favoritesTodo(todo) {
   todo.favorites = !todo.favorites; // phương thức đảo ngược
@@ -101,9 +122,6 @@ async function favoritesTodo(todo) {
         "Content-Type": "application/json",
       },
     }
-  );
-  todos.favorites = await $fetch(
-    "https://6642ea4a3c01a059ea20c7c2.mockapi.io/TODOLIST"
   );
 }
 
@@ -205,12 +223,12 @@ function showFavorites() {
         >
           Hide
         </button>
-        <!-- <button
+        <button
           class="bg-gray-500 hover:bg-gray-600 duration-500 text-white p-1 rounded-xl w-20"
           @click="deleteAll"
         >
           Delete All
-        </button> -->
+        </button>
 
         <button
           class="bg-red-500 hover:bg-red-600 duration-500 text-white p-1 rounded-xl w-20"
