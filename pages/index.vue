@@ -54,29 +54,29 @@ const filteredtodos = computed(() => {
 //   newtodo.value = "";
 //}
 
-// function removetodo(todo) {
-//   console.log("🚀 ~ todo:", todo);
+// function removeTodo(todo) {
+//   //console.log("🚀 ~ todo:", todo);
 //   let x = todos.value.filter((t) => t.id !== todo.id); //todo.id = giá trị của id
-//   // //console.log("🚀 ~ todo.id:", todo.id)
+//   //console.log("🚀 ~ todo.id:", todo.id);
 //   todos.value = x;
-//   //console.log("🚀 ~ todos.value:", todos.value);
+//   console.log("🚀 ~ todos.value:", todos.value);
 // }
 
-async function removetodo(todo) {
+async function removeTodo(todo) {
+  let id = todo?.id;
+  console.log("🚀 ~ id:", id);
+
   const res = await $fetch(
-    "https://6642ea4a3c01a059ea20c7c2.mockapi.io/TODOLIST/${todo.id}",
+    `https://6642ea4a3c01a059ea20c7c2.mockapi.io/TODOLIST/${id}`,
     {
       method: "DELETE",
-      body: {
-        id: (todos.value = todos.value.filter((t) => t.id !== todo.id)),
-      },
     }
   );
+  todos.value = await $fetch(
+    "https://6642ea4a3c01a059ea20c7c2.mockapi.io/TODOLIST" // đặt lại mảng ban đầu
+  );
+  //console.log(res);
 }
-todos.value = await $fetch(
-  "https://6642ea4a3c01a059ea20c7c2.mockapi.io/TODOLIST"
-);
-//console.log("🚀 ~ todos.value:", todos.value);
 
 // function deleteAll() {
 //   let y = todos.value.filter((t) => t.id === newtodo);
@@ -91,9 +91,25 @@ function gettodoClass(todo) {
   }
 }
 
-function favoritestodo(todo) {
-  todo.favorites = !todo.favorites;
-  //console.log("🚀 ~ todo:", todo)
+// function favoritesTodo(todo) {
+//   todo.favorites = !todo.favorites;
+//   //console.log("🚀 ~ todo:", todo)
+// }
+
+async function favoritesTodo(todo) {
+  let id1 = (todo.favorites = !todo.favorites);
+  //console.log("🚀 ~ id1:", id1);
+  const res = await $fetch(
+    `https://6642ea4a3c01a059ea20c7c2.mockapi.io/TODOLIST/${id1}`,
+    {
+      method: "PUT",
+      body: JSON.stringify({ favorites: todos.value }),
+    }
+  );
+  todos.value = await $fetch(
+    "https://6642ea4a3c01a059ea20c7c2.mockapi.io/TODOLIST"
+  );
+  //console.log(res);
 }
 
 //lọc ra các thành phần có fav = true và trả về mảng ban đầu
@@ -125,7 +141,7 @@ function showFavorites() {
       class="container mx-auto p-4 flex flex-col bg-white h-[600px] w-[450px] space-y-3 rounded-xl justify-between"
     >
       <h1 class="text-3xl text-center font-bold hover:bg-gray-300 duration-500">
-        todo App
+        Todo App
       </h1>
       <form class="flex flex-row shadow" @submit.prevent="contactForm()">
         <input
@@ -144,7 +160,7 @@ function showFavorites() {
           >
             <div class="flex flex-col h-auto w-full px-2">
               <div class="flex">
-                <!-- {{ todo.favorites }} -->
+                {{ todo.favorites }}
                 <input
                   type="checkbox"
                   class="mr-2 flex-grow-0"
@@ -155,7 +171,7 @@ function showFavorites() {
                   :class="gettodoClass(todo)"
                   >{{ todo.text }}
                 </span>
-                <button class="flex-grow-0 w-6" @click="removetodo(todo)">
+                <button class="flex-grow-0 w-6" @click="removeTodo(todo)">
                   <img
                     src="https://banner2.cleanpng.com/20180204/tew/kisspng-button-icon-delete-button-png-picture-5a77bb72658409.7623834215177962104158.jpg"
                     class="w-5 h-5 rounded"
@@ -163,7 +179,7 @@ function showFavorites() {
                 </button>
 
                 <!-- tạo ra nút màu đỏ -->
-                <button @click="favoritestodo(todo)">
+                <button @click="favoritesTodo(todo)">
                   <svg
                     class="w-5"
                     :class="todo.favorites ? 'text-red-500' : 'text-black '"
