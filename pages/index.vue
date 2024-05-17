@@ -135,7 +135,6 @@ async function favoritesTodo(todo) {
   );
 }
 
-
 //lọc ra các thành phần có fav = true và trả về mảng ban đầu
 //tạo function mới có chức năng hiện ra những công việc yêu thích
 function showFavorites() {
@@ -159,7 +158,7 @@ function showFavorites() {
 </script>
 
 <template>
-  <div class="bg-cyan-500 h-screen flex flex-col justify-center items-center">
+  <div class="bg-gray-600 h-screen flex flex-col justify-center items-center">
     <div
       class="container mx-auto p-4 flex flex-col bg-white h-[600px] w-[450px] space-y-3 rounded-xl justify-between"
     >
@@ -200,7 +199,7 @@ function showFavorites() {
                 >
                   {{ todo.text }}
                 </span>
-                <div class="space-x-2 flex flex-row">
+                <div class="space-x-3 flex">
                   <button class="w-6 opacity-60" @click="removeTodo(todo)">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                       <path
@@ -244,8 +243,8 @@ function showFavorites() {
         </div>
       </div>
       <div>
-        <div class="flex flex-row space-x-1 justify-end">
-          <div class="flex flex-row font-serif text-right">You have</div>
+        <div class="flex flex-row space-x-1.5 justify-end">
+          <div class="font-serif text-right">You have</div>
           <p id="countFalseDisplay" class="font-bold space-x-3 text-right"></p>
           <div>tasks left todo</div>
         </div>
