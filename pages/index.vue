@@ -135,19 +135,6 @@ async function favoritesTodo(todo) {
   );
 }
 
-// async function arrangeTodo(todo) {
-//   let id1 = todo?.id;
-//   console.log("🚀 ~ item:", todo);
-
-//   let x = todos.value;
-//   for (let i = arrayLength - 1; i > 0; i--) {
-//     let j = Math.floor(Math.random() * (i + 1));
-//     let k = x[i];
-//     x[i] = x[j];
-//     x[j] = k;
-//   }
-//   console.log("🚀 ~ points:", x);
-//}
 
 //lọc ra các thành phần có fav = true và trả về mảng ban đầu
 //tạo function mới có chức năng hiện ra những công việc yêu thích
