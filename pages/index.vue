@@ -14,23 +14,34 @@ const todos_old = ref([]); // giữ lại giá trị mảng cũ
 let check_favorite = false; // khai báo biến check favorite = false
 
 // hiển thị lên màn hình dữ liệu được trả về từ API
+// const dataTwice = await $fetch(
+//   "https://6642ea4a3c01a059ea20c7c2.mockapi.io/TODOLIST"
+// );
+
 $fetch("https://6642ea4a3c01a059ea20c7c2.mockapi.io/TODOLIST").then((x) => {
   todos.value = x;
-
-  // khai báo arrLength để đo độ dài
-  let arrayLength = todos.value.length;
-  //console.log("🚀 ~ $fetch ~ arrayLength:", arrayLength);
   //console.log("🚀 ~ $fetch ~ x:", x);
 
-  // sắp xếp ngẫu nhiên các tasks
+  // khai báo arrLength để đo độ dài
+  // let arrayLength = todos.value.length;
+  // console.log("🚀 ~ $fetch ~ arrayLength:", arrayLength);
 
-  for (let i = arrayLength - 1; i > 0; i--) {
-    let j = Math.floor(Math.random() * (i + 1));
-    let k = x[i];
-    x[i] = x[j];
-    x[j] = k;
-  }
-  console.log("🚀 ~ points:", x);
+  // Sử dụng filter để lọc các giá trị true và đếm số lượng phần tử còn lại
+  const countfalse = todos.value.filter((todo) => !todo.done).length;
+  console.log("🚀 ~ $fetch ~ countfalse:", countfalse);
+
+  const countFalseDisplay = document.getElementById("countFalseDisplay");
+
+  countFalseDisplay.textContent = countfalse;
+
+  // sắp xếp ngẫu nhiên các tasks
+  // for (let i = arrayLength - 1; i > 0; i--) {
+  //   let j = Math.floor(Math.random() * (i + 1));
+  //   let k = x[i];
+  //   x[i] = x[j];
+  //   x[j] = k;
+  // }
+  // console.log("🚀 ~ points:", x);
 });
 
 // function addtodo() {
@@ -44,7 +55,6 @@ $fetch("https://6642ea4a3c01a059ea20c7c2.mockapi.io/TODOLIST").then((x) => {
 //   //console.log(todos.value);
 //   //xóa input đầu vào
 //   newtodo.value = "";
-//}
 
 //code tính năng update dùng hàm POSH
 async function contactForm() {
@@ -98,7 +108,7 @@ async function removeTodo(todo) {
 
 async function gettodoClass(item) {
   // dùng item để k bị lỗi trùng lặp quá nhiều
-  // console.log("🚀 ~ item:", item); // done sẽ từ false chuyển sang true
+  //console.log("🚀 ~ item:", item); // done sẽ từ false chuyển sang true
   const res = await $fetch(
     `https://6642ea4a3c01a059ea20c7c2.mockapi.io/TODOLIST/${item?.id}`,
     {
@@ -125,19 +135,19 @@ async function favoritesTodo(todo) {
   );
 }
 
-async function arrangeTodo(todo) {
-  let id1 = todo?.id;
-  console.log("🚀 ~ item:", todo);
+// async function arrangeTodo(todo) {
+//   let id1 = todo?.id;
+//   console.log("🚀 ~ item:", todo);
 
-  //   let x = todos.value;
-  //   for (let i = arrayLength - 1; i > 0; i--) {
-  //     let j = Math.floor(Math.random() * (i + 1));
-  //     let k = x[i];
-  //     x[i] = x[j];
-  //     x[j] = k;
-  //   }
-  //   console.log("🚀 ~ points:", x);
-}
+//   let x = todos.value;
+//   for (let i = arrayLength - 1; i > 0; i--) {
+//     let j = Math.floor(Math.random() * (i + 1));
+//     let k = x[i];
+//     x[i] = x[j];
+//     x[j] = k;
+//   }
+//   console.log("🚀 ~ points:", x);
+//}
 
 //lọc ra các thành phần có fav = true và trả về mảng ban đầu
 //tạo function mới có chức năng hiện ra những công việc yêu thích
@@ -188,10 +198,10 @@ function showFavorites() {
           >
             <div class="flex flex-col h-auto w-full px-2">
               <div class="flex">
-                <!-- {{ todo.favorites }} -->
+                <!-- {{ todo.done }} -->
                 <input
                   type="checkbox"
-                  class="mr-2 flex-grow-0"
+                  class="mr-4 flex-grow-0"
                   v-model="todo.done"
                   @change="gettodoClass(todo)"
                 />
@@ -246,22 +256,22 @@ function showFavorites() {
           </div>
         </div>
       </div>
-      <div class="">
+      <div>
         <div class="flex flex-row space-x-1 justify-end">
           <div class="flex flex-row font-serif text-right">You have</div>
-          <div class="font-bold space-x-3 text-right">{{ todos.length }}</div>
+          <p id="countFalseDisplay" class="font-bold space-x-3 text-right"></p>
           <div>tasks left todo</div>
         </div>
         <div class="text-end mt-4 space-x-2">
           <button
             class="bg-green-500 font-serif hover:bg-green-700 duration-500 text-white border-double border-4 p-0 rounded-xl w-20"
-            @click="hideCompleted = true"
+            @click="hideCompleted = false"
           >
             Show All
           </button>
           <button
             class="bg-blue-500 font-serif hover:bg-blue-700 duration-500 text-white p-0 rounded-xl border-double border-4 w-20"
-            @click="hideCompleted = false"
+            @click="hideCompleted = true"
           >
             Hide
           </button>
