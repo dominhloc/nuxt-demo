@@ -28,10 +28,9 @@ $fetch("https://6642ea4a3c01a059ea20c7c2.mockapi.io/TODOLIST").then((x) => {
 
   // Sử dụng filter để lọc các giá trị true và đếm số lượng phần tử còn lại
   const countfalse = todos.value.filter((todo) => !todo.done).length;
-  console.log("🚀 ~ $fetch ~ countfalse:", countfalse);
+  //console.log("🚀 ~ $fetch ~ countfalse:", countfalse);
 
-  const countFalseDisplay = document.getElementById("countFalseDisplay");
-
+  //const countFalseDisplay = document.getElementById("countFalseDisplay");
   countFalseDisplay.textContent = countfalse;
 
   // sắp xếp ngẫu nhiên các tasks
@@ -100,10 +99,10 @@ async function removeTodo(todo) {
 
 // function gettodoClass(todo) {
 //   // todo ở đây là param
-//   if (todo.done) {
-//     //console.log("🚀 ~ gettodoClass ~ todo.done:", todo.done);
-//     return "line-through text-blue-600";
-//   }
+// if (todo.done) {
+//   //console.log("🚀 ~ gettodoClass ~ todo.done:", todo.done);
+//   return "line-through text-blue-600";
+// }
 // }
 
 async function gettodoClass(item) {
@@ -158,16 +157,18 @@ function showFavorites() {
 </script>
 
 <template>
-  <div class="bg-gray-600 h-screen flex flex-col justify-center items-center">
+  <div
+    class="bg-gradient-to-t from-blue-300 via-blue-400 to-blue-100 h-screen flex flex-col justify-center items-center"
+  >
     <div
       class="container mx-auto p-4 flex flex-col bg-white h-[600px] w-[450px] space-y-3 rounded-xl justify-between"
     >
       <h1
-        class="text-3xl text-center font-bold font-serif hover:bg-gray-300 duration-500"
+        class="text-3xl text-center font-bold font-serif border-2 rounded-xl hover:bg-gray-300 duration-500"
       >
         Todo App
       </h1>
-      <form class="flex flex-row shadow" @submit.prevent="contactForm()">
+      <form class="flex flex-row" @submit.prevent="contactForm()">
         <input
           class="text-left shadow-md px-6 w-full border-2 font-bold font-serif rounded-xl h-14"
           v-model="newtodo"
@@ -175,10 +176,10 @@ function showFavorites() {
           placeholder="Add a new task........ "
         />
       </form>
-      <div class="space-y-1 h-full overflow-auto">
-        <div class="flex flex-col space-y-3">
+      <div class="h-full overflow-auto">
+        <div class="flex flex-col space-y-4">
           <div
-            class="py-2 border-b flex items-center"
+            class="py-2 border-b flex items-center bg-slate-200 rounded-lg"
             v-for="todo in filteredtodos"
             :key="todo.id"
           >
@@ -200,7 +201,7 @@ function showFavorites() {
                   {{ todo.text }}
                 </span>
                 <div class="space-x-3 flex">
-                  <button class="w-6 opacity-60" @click="removeTodo(todo)">
+                  <button class="w-7 opacity-60" @click="removeTodo(todo)">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                       <path
                         fill="black"
@@ -212,7 +213,7 @@ function showFavorites() {
                   <!-- tạo ra nút màu đỏ -->
                   <button @click="favoritesTodo(todo)">
                     <svg
-                      class="w-5"
+                      class="w-6"
                       :class="todo.favorites ? 'text-red-500' : 'opacity-60 '"
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
@@ -245,8 +246,12 @@ function showFavorites() {
       <div>
         <div class="flex flex-row space-x-1.5 justify-end">
           <div class="font-serif text-right">You have</div>
-          <p id="countFalseDisplay" class="font-bold space-x-3 text-right"></p>
-          <div>tasks left todo</div>
+          <p
+            id="countFalseDisplay"
+            class="font-bold font-serif space-x-3 text-right"
+          ></p>
+          <div class="font-serif font-bold">/ {{ todos.length }}</div>
+          <div class="font-serif">tasks left todo</div>
         </div>
         <div class="text-end mt-4 space-x-2">
           <button
