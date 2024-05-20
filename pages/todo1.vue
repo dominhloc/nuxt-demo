@@ -18,6 +18,11 @@ $fetch("https://6642ea4a3c01a059ea20c7c2.mockapi.io/NEWTODOLIST").then((x) => {
   countFalseDisplay.textContent = countfalse;
 });
 
+const filteredtodos = computed(() => {
+  return hideCompleted.value ? todos.value.filter((t) => !t.done) : todos.value;
+});
+console.log("🚀 ~ filteredtodos ~ filteredtodos:", filteredtodos);
+
 async function addTodo() {
   const res = await $fetch(
     "https://6642ea4a3c01a059ea20c7c2.mockapi.io/NEWTODOLIST",
@@ -31,20 +36,6 @@ async function addTodo() {
     "https://6642ea4a3c01a059ea20c7c2.mockapi.io/NEWTODOLIST"
   );
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-  const currentDate = new Date();
-  console.log("🚀 ~ currentDate:", currentDate);
-  const options = {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  };
-  const formattedDate = currentDate.toLocaleDateString("en-US", options);
-  dateContainer.textContent = formattedDate;
-  console.log("🚀 ~ formattedDate:", formattedDate);
-});
 
 // function addTodo(todo) {
 //   let newIndex = todos.value.length + 1;
@@ -172,6 +163,20 @@ async function gettodoClass(todo) {
               <div>tasks left todo</div>
             </div>
           </div>
+        </div>
+        <div class="flex flex-row justify-center space-x-3">
+          <button
+            class="font-serif hover:bg-slate-700 duration-500 text-white border p-0 rounded-xl w-20"
+            @click="hideCompleted = false"
+          >
+            Show All
+          </button>
+          <button
+            class="font-serif hover:bg-slate-700 duration-500 text-white border p-0 rounded-xl w-20"
+            @click="hideCompleted = true"
+          >
+            Hide
+          </button>
         </div>
       </div>
     </div>
