@@ -10,9 +10,6 @@ const todos = ref([
   // { id: 4, text: "Công Việc 4", done: false, favorites: false },
 ]);
 
-const todos_old = ref([]); // giữ lại giá trị mảng cũ
-let check_favorite = false; // khai báo biến check favorite = false
-
 // hiển thị lên màn hình dữ liệu được trả về từ API
 // const dataTwice = await $fetch(
 //   "https://6642ea4a3c01a059ea20c7c2.mockapi.io/TODOLIST"
@@ -134,25 +131,49 @@ async function favoritesTodo(todo) {
   );
 }
 
-//lọc ra các thành phần có fav = true và trả về mảng ban đầu
 //tạo function mới có chức năng hiện ra những công việc yêu thích
+//lọc ra các thành phần có fav = true và trả về mảng ban đầu
+
+// function showFavorites() {
+//   const list_todo = ref([]);
+//   if (check_favorite == true) {
+//     todos.value = todos_old.value;
+//     //
+//     check_favorite = false;
+//   } else {
+//     // case mặc định
+//     todos_old.value = todos.value;
+//     const newList = todos.value.filter((todo) => todo.favorites === true);
+//     for (let i = 0; i < todos.value.length; i++) {
+//       if (todos.value[i].favorites == true) {
+//         list_todo.value.push(todos.value[i]);
+//       }
+//     }
+//     todos.value = list_todo.value;
+//     check_favorite = true;
+//   }
+// }
+
+const todos_old = ref([]); // giữ lại giá trị mảng cũ
+let check_favorite = false; // khai báo biến check favorite = false
+
 function showFavorites() {
-  const list_todo = ref([]);
-  if (check_favorite == true) {
+  // Nếu đã hiển thị danh sách yêu thích, trở về danh sách ban đầu
+  if (check_favorite === true) {
     todos.value = todos_old.value;
-    //
-    check_favorite = false;
   } else {
-    // case mặc định
+    // Lưu trữ danh sách ban đầu vào todos_old
     todos_old.value = todos.value;
-    for (let i = 0; i < todos.value.length; i++) {
-      if (todos.value[i].favorites == true) {
-        list_todo.value.push(todos.value[i]);
-      }
-    }
-    todos.value = list_todo.value;
-    check_favorite = true;
+
+    // Tạo danh sách mới chỉ chứa các mục yêu thích
+    const newList = todos.value.filter((todo) => todo.favorites === true);
+
+    // Gán todos bằng danh sách mới
+    todos.value = newList;
   }
+
+  // Đảo ngược giá trị của biến check_favorite
+  check_favorite = !check_favorite;
 }
 </script>
 

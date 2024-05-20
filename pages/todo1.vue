@@ -32,6 +32,20 @@ async function addTodo() {
   );
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+  const currentDate = new Date();
+  console.log("🚀 ~ currentDate:", currentDate);
+  const options = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
+  const formattedDate = currentDate.toLocaleDateString("en-US", options);
+  dateContainer.textContent = formattedDate;
+  console.log("🚀 ~ formattedDate:", formattedDate);
+});
+
 // function addTodo(todo) {
 //   let newIndex = todos.value.length + 1;
 //   todos.value.push({
