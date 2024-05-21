@@ -11,17 +11,13 @@ const todos = ref([
   // { id: 5, text: "Công Việc 5", done: false },
 ]);
 
+//mock API - hiển thị lên màn hình dữ liệu được trả về từ API
 $fetch("https://6642ea4a3c01a059ea20c7c2.mockapi.io/NEWTODOLIST").then((x) => {
   todos.value = x;
 
   const countfalse = todos.value.filter((todo) => !todo.done).length;
   countFalseDisplay.textContent = countfalse;
 });
-
-const filteredtodos = computed(() => {
-  return hideCompleted.value ? todos.value.filter((t) => !t.done) : todos.value;
-});
-console.log("🚀 ~ filteredtodos ~ filteredtodos:", filteredtodos);
 
 async function addTodo() {
   const res = await $fetch(
@@ -36,6 +32,10 @@ async function addTodo() {
     "https://6642ea4a3c01a059ea20c7c2.mockapi.io/NEWTODOLIST"
   );
 }
+const filteredtodos = computed(() => {
+  return hideCompleted.value ? todos.value.filter((t) => !t.done) : todos.value;
+});
+//console.log("🚀 ~ filteredtodos ~ filteredtodos:", filteredtodos);
 
 // function addTodo(todo) {
 //   let newIndex = todos.value.length + 1;
@@ -68,7 +68,7 @@ async function removeTodo(todo) {
 // }
 
 async function gettodoClass(todo) {
-  console.log("🚀 ~ gettodoClass :", todo.done);
+  //console.log("🚀 ~ gettodoClass :", todo.done);
   const res = await $fetch(
     `https://6642ea4a3c01a059ea20c7c2.mockapi.io/NEWTODOLIST/${todo?.id}`,
     {
@@ -76,9 +76,28 @@ async function gettodoClass(todo) {
       body: todo,
     }
   );
-  todos.value = await $fetch(
-    "https://6642ea4a3c01a059ea20c7c2.mockapi.io/NEWTODOLIST"
-  );
+}
+
+const todos_old = ref([]);
+let check_done = false;
+
+function hideComp() {
+  if (check_done === true) {
+    todos.value = todos_old.value;
+  } else {
+    // Lưu trữ danh sách ban đầu vào todos_old
+    todos_old.value = todos.value;
+
+    // Tạo danh sách mới chỉ chứa các mục yêu thích
+    const newList = todos.value.filter((todo) => todo.done === true);
+    //console.log("🚀 ~ hideComp ~ newList:", newList);
+
+    // Gán todos bằng danh sách mới
+    todos.value = newList;
+  }
+
+  // Đảo ngược giá trị của biến check_done
+  check_done = !check_done;
 }
 </script>
 
@@ -90,9 +109,9 @@ async function gettodoClass(todo) {
       <div class="p-6 space-y-5">
         <div class="font-serif text-6xl text-center text-white">Just do it</div>
         <div class="flex flex-row justify-center">
-          <form class="" @submit.prevent="addTodo">
+          <form @submit.prevent="addTodo">
             <input
-              class="rounded-l-2xl p-2 w-52 font-serif bg-slate-700 text-white"
+              class="rounded-l-2xl p-2 w-52 font-serif bg-slate-500 text-white"
               v-model="newtodo"
               required
               placeholder="Add a task ...."
@@ -107,10 +126,12 @@ async function gettodoClass(todo) {
 
         <div class="flex-col flex h-[300px] overflow-auto space-y-5 font-serif">
           <div
-            class="flex flex-row bg-slate-700 rounded-full pl-3"
-            v-for="todo in todos"
+            class="flex flex-row rounded-full pl-1 border-y-2"
+            v-for="todo in filteredtodos"
             :key="todo.id"
           >
+            <div class="text-center p-2 text-yellow-400">{{ todo.id }} :</div>
+            <!-- {{ todo.done }} -->
             <span
               class="flex flex-grow items-center"
               :class="todo.done ? 'line-through text-yellow-300' : 'text-white'"
@@ -120,8 +141,7 @@ async function gettodoClass(todo) {
 
             <div class="flex space-x-2 justify-end">
               <div
-                class="flex bg-slate-400 rounded-full w-7 justify-center hover:bg-slate-500 duration-500 cursor-pointer"
-                @click="toggleCheckbox"
+                class="flex bg-slate-400 w-10 h-10 rounded-full justify-center hover:bg-slate-500 duration-500"
               >
                 <input
                   type="checkbox"
@@ -132,7 +152,7 @@ async function gettodoClass(todo) {
               </div>
 
               <button
-                class="w-7 flex justify-center items-center bg-slate-400 hover:bg-slate-500 duration-500 rounded-2xl"
+                class="w-10 h-10 flex justify-center items-center bg-slate-400 hover:bg-slate-500 duration-500 rounded-full"
                 @click="removeTodo(todo)"
               >
                 <svg
@@ -153,7 +173,7 @@ async function gettodoClass(todo) {
         </div>
         <div class="flex flex-row justify-center">
           <div
-            class="text-center font-serif text-white w-72 border rounded-full hover:bg-slate-700 duration-500"
+            class="text-center font-serif text-white w-72 border-y-2 rounded-full hover:bg-slate-700 duration-500"
           >
             <div class="flex flex-row justify-center space-x-2">
               <div>You have</div>
@@ -166,16 +186,10 @@ async function gettodoClass(todo) {
         </div>
         <div class="flex flex-row justify-center space-x-3">
           <button
-            class="font-serif hover:bg-slate-700 duration-500 text-white border p-0 rounded-xl w-20"
-            @click="hideCompleted = false"
+            class="font-serif hover:bg-slate-700 duration-500 text-white border p-0 rounded-xl w-40 bg-gradient-to-l from-gray-800 via-gray-600 to-gray-800"
+            @click="hideComp"
           >
-            Show All
-          </button>
-          <button
-            class="font-serif hover:bg-slate-700 duration-500 text-white border p-0 rounded-xl w-20"
-            @click="hideCompleted = true"
-          >
-            Hide
+            {{ "Show/Hide" }}
           </button>
         </div>
       </div>

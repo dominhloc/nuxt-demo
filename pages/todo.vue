@@ -29,15 +29,6 @@ $fetch("https://6642ea4a3c01a059ea20c7c2.mockapi.io/TODOLIST").then((x) => {
 
   //const countFalseDisplay = document.getElementById("countFalseDisplay");
   countFalseDisplay.textContent = countfalse;
-
-  // sắp xếp ngẫu nhiên các tasks
-  // for (let i = arrayLength - 1; i > 0; i--) {
-  //   let j = Math.floor(Math.random() * (i + 1));
-  //   let k = x[i];
-  //   x[i] = x[j];
-  //   x[j] = k;
-  // }
-  // console.log("🚀 ~ points:", x);
 });
 
 // function addtodo() {
