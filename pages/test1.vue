@@ -12,12 +12,12 @@ const todos = ref([
 ]);
 
 //mock API - hiển thị lên màn hình dữ liệu được trả về từ API
-$fetch("https://6642ea4a3c01a059ea20c7c2.mockapi.io/NEWTODOLIST").then((x) => {
-  todos.value = x;
+// $fetch("https://6642ea4a3c01a059ea20c7c2.mockapi.io/NEWTODOLIST").then((x) => {
+//   todos.value = x;
 
-  const countfalse = todos.value.filter((todo) => !todo.done).length;
-  countFalseDisplay.textContent = countfalse;
-});
+//   const countfalse = todos.value.filter((todo) => !todo.done).length;
+//   countFalseDisplay.textContent = countfalse;
+// });
 
 function addTodo(todo) {
   // khai báo 1 mảng mới = độ dài mảng cũ + 1
@@ -64,7 +64,7 @@ function favoritesTodo(todo) {
       </div>
       <!-- nút enter để add -->
       <form
-        class="flex justify-center font-serif items-center space-x-4 pb-3"
+        class="flex justify-center font-serif items-center space-x-4 pb-7"
         @submit.prevent="addTodo"
       >
         <input
@@ -73,7 +73,9 @@ function favoritesTodo(todo) {
           required
           placeholder="Type here"
         />
-        <button class="h-16 w-20 bg-slate-500 font-serif rounded-2xl">
+        <button
+          class="h-16 w-20 bg-slate-500 hover:bg-slate-400 duration-200 font-serif rounded-2xl"
+        >
           Add..
         </button>
       </form>
@@ -83,7 +85,7 @@ function favoritesTodo(todo) {
       class="space-y-4 flex flex-col justify-center items-center p-20 pt-10 bg-slate-200 overflow-auto"
     >
       <div
-        class="h-20 pl-3 bg-slate-400 font-bold flex justify-center overflow-auto items-center w-3/4 font-serif space-x-4 rounded-2xl text-xl"
+        class="h-20 pl-3 bg-slate-400 font-bold hover:bg-slate-300 flex justify-center overflow-auto items-center w-3/4 font-serif duration-200 space-x-4 rounded-2xl text-xl"
         v-for="todo in todos"
         :key="todo.id"
       >
@@ -91,17 +93,24 @@ function favoritesTodo(todo) {
         <span :class="todo.done ? 'line-through text-blue-600' : 'text-black'">
           {{ todo.text }}
         </span>
-        <div class="flex flex-auto justify-end space-x-3 pr-4">
-          <input
-            class="w-5"
-            type="checkbox"
-            v-model="todo.done"
-            @click="gettodoClass(todo)"
-          />
+        <div class="flex flex-auto justify-end space-x-2 pr-3">
+          <div
+            class="p-4 flex justify-center items-center hover:bg-slate-100 rounded-full"
+          >
+            <input
+              class="w-6 h-7 hover:bg-slate-200 rounded-lg"
+              type="checkbox"
+              v-model="todo.done"
+              @click="gettodoClass(todo)"
+            />
+          </div>
 
-          <button @click="favoritesTodo(todo)">
+          <button
+            class="p-4 hover:bg-slate-200 rounded-full"
+            @click="favoritesTodo(todo)"
+          >
             <svg
-              class="w-6"
+              class="w-7"
               :class="todo.favorites ? 'text-red-500' : 'opacity-70 '"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -112,7 +121,10 @@ function favoritesTodo(todo) {
               />
             </svg>
           </button>
-          <button class="opacity-70" @click="removeTodo(todo)">
+          <button
+            class="opacity-70 hover:bg-slate-200 p-4 rounded-full"
+            @click="removeTodo(todo)"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="1.2em"
@@ -127,10 +139,12 @@ function favoritesTodo(todo) {
           </button>
         </div>
       </div>
-      <div class="flex flex-row justify-center space-x-2">
-        <div>You have</div>
-        <div class="font-bold text-red-500">{{ todos.length }}</div>
-        <div>tasks left todo</div>
+      <div class="flex flex-row justify-center space-x-2 pt-5">
+        <div class="font-serif font-bold text-lg">You have</div>
+        <div class="font-bold font-serif text-lg text-red-500">
+          {{ todos.length }}
+        </div>
+        <div class="font-serif font-bold text-lg">tasks left todo</div>
       </div>
     </div>
   </div>

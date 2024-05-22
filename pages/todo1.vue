@@ -15,7 +15,9 @@ const todos = ref([
 $fetch("https://6642ea4a3c01a059ea20c7c2.mockapi.io/NEWTODOLIST").then((x) => {
   todos.value = x;
 
+  // dùng filter lọc các phần tử có giá trị là false rồi tính độ dài của chúng
   const countfalse = todos.value.filter((todo) => !todo.done).length;
+  const countFalseDisplay = document.getElementById("countFalseDisplay");
   countFalseDisplay.textContent = countfalse;
 });
 
@@ -189,7 +191,7 @@ function hideComp() {
             class="font-serif hover:bg-slate-700 duration-500 text-white border p-0 rounded-xl w-40 bg-gradient-to-l from-gray-800 via-gray-600 to-gray-800"
             @click="hideComp"
           >
-            {{ "Show/Hide" }}
+            {{ "Show / Hide" }}
           </button>
         </div>
       </div>
