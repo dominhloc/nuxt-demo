@@ -11,10 +11,6 @@ const todos = ref([
 ]);
 
 // hiển thị lên màn hình dữ liệu được trả về từ API
-// const dataTwice = await $fetch(
-//   "https://6642ea4a3c01a059ea20c7c2.mockapi.io/TODOLIST"
-// );
-
 $fetch("https://6642ea4a3c01a059ea20c7c2.mockapi.io/TODOLIST").then((x) => {
   todos.value = x;
   //console.log("🚀 ~ $fetch ~ x:", x);
@@ -26,8 +22,7 @@ $fetch("https://6642ea4a3c01a059ea20c7c2.mockapi.io/TODOLIST").then((x) => {
   // Sử dụng filter để lọc các giá trị true và đếm số lượng phần tử còn lại
   const countfalse = todos.value.filter((todo) => !todo.done).length;
   //console.log("🚀 ~ $fetch ~ countfalse:", countfalse);
-
-  //const countFalseDisplay = document.getElementById("countFalseDisplay");
+  const countFalseDisplay = document.getElementById("countFalseDisplay");
   countFalseDisplay.textContent = countfalse;
 });
 
@@ -57,6 +52,7 @@ async function contactForm() {
     "https://6642ea4a3c01a059ea20c7c2.mockapi.io/TODOLIST"
   );
 }
+
 //lọc các giá trị mới được thêm vào
 const filteredtodos = computed(() => {
   return hideCompleted.value ? todos.value.filter((t) => !t.done) : todos.value;

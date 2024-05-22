@@ -14,12 +14,13 @@ const todos = ref([
 //mock API - hiển thị lên màn hình dữ liệu được trả về từ API
 $fetch("https://6642ea4a3c01a059ea20c7c2.mockapi.io/NEWTODOLIST").then((x) => {
   todos.value = x;
-
-  // dùng filter lọc các phần tử có giá trị là false rồi tính độ dài của chúng
+});
+// dùng filter lọc các phần tử có giá trị là false rồi tính độ dài của chúng
+function updateCountFalse() {
   const countfalse = todos.value.filter((todo) => !todo.done).length;
   const countFalseDisplay = document.getElementById("countFalseDisplay");
   countFalseDisplay.textContent = countfalse;
-});
+}
 
 async function addTodo() {
   const res = await $fetch(

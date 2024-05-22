@@ -1,14 +1,11 @@
 <script setup>
-import { ref, computed } from "vue";
-
-let id = 0;
-let playEr1 = "X";
-let playEr2 = "O";
-const board = [
+let player = ref("O"); // khai báo người chơi đầu tiên
+// khai báo tạo bảng cờ 3x3
+const board = ref([
   ["", "", ""],
   ["", "", ""],
   ["", "", ""],
-];
+]);
 </script>
 
 <template>
@@ -21,7 +18,8 @@ const board = [
 
     <div class="border-white bg-slate-500 border-2 rounded-xl p-5 shadow">
       <div class="text-center text-white mb-15 text-2xl">
-        Lượt Người Chơi 'X'
+        Player "
+        {{ player }}"
         <div
           class="m-5 flex flex-col justify-center items-center h-xs w-xs text-center bg-black rounded-xl"
         ></div>
