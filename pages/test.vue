@@ -1,4 +1,14 @@
 <script setup>
+//
+import JSConfetti from "js-confetti";
+const confetti = new JSConfetti();
+
+function showConfetti() {
+  confetti.addConfetti({
+    emojis: ["🌈", "⚡️", "💥", "✨", "💫", "🌸"],
+  });
+}
+//
 // khai báo người chơi đầu tiên
 let player = ref("O");
 // khai báo tạo bảng cờ 3x3
@@ -106,5 +116,6 @@ const ResetGame = () => {
     >
       Game New
     </button>
+    <h1 class="text-center" @click="showConfetti">🎉Congratulations🎉</h1>
   </div>
 </template>
