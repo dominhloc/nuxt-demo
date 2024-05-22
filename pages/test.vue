@@ -36,7 +36,7 @@ const checkWinner = (board) => {
 
     // kiểm tra a,b,c có cùng giá trị hay không. Nếu cả 3 điều kiện đúng thì thỏa mãn 1 đk chiến thắng
     if (board[a] && board[a] === board[b] && board[a] === board[c]) {
-      return board[a]; // trả về 'X' hoặc 'O' nếu có người chiến thắng
+      return showConfetti(); // trả về 'X' hoặc 'O' nếu có người chiến thắng
     }
   }
   return null; // trả về null nếu không có người chiến thắng
