@@ -17,38 +17,39 @@ const board = ref([
   ["", "", "", ""],
 ]);
 // check các điều kiện chiến thắng
-const checkWinner = (board) => {
-  //các điều kiện chiến thắng
-  const lines = [
-    //dọc
-    [0, 1, 2],
-    [4, 5, 6],
-    [8, 9, 10],
-    [12, 13, 14],
-    [1, 2, 3],
-    [5, 6, 7],
-    [9, 10, 11],
-    [13, 14, 15],
-    //ngang
-    [0, 4, 8],
-    [1, 5, 9],
-    [2, 6, 10],
-    [3, 7, 11],
-    [4, 8, 12],
-    [5, 9, 13],
-    [6, 10, 14],
-    [7, 11, 15],
-    //chéo 1
-    [1, 6, 11],
-    [0, 5, 10],
-    [5, 10, 15],
-    [4, 9, 14],
-    //chéo 2
-    [2, 5, 8],
-    [6, 9, 12],
-    [3, 6, 9],
-    [7, 10, 13],
-  ];
+
+//các điều kiện chiến thắng
+const lines = [
+  //dọc
+  [0, 1, 2],
+  [4, 5, 6],
+  [8, 9, 10],
+  [12, 13, 14],
+  [1, 2, 3],
+  [5, 6, 7],
+  [9, 10, 11],
+  [13, 14, 15],
+  //ngang
+  [0, 4, 8],
+  [1, 5, 9],
+  [2, 6, 10],
+  [3, 7, 11],
+  [4, 8, 12],
+  [5, 9, 13],
+  [6, 10, 14],
+  [7, 11, 15],
+  //chéo 1
+  [1, 6, 11],
+  [0, 5, 10],
+  [5, 10, 15],
+  [4, 9, 14],
+  //chéo 2
+  [2, 5, 8],
+  [6, 9, 12],
+  [3, 6, 9],
+  [7, 10, 13],
+];
+function checkWinner(board) {
   // dùng for lặp qua mảng `lines` để kiểm tra điều kiện chiến thắng
   for (let i = 0; i < lines.length; i++) {
     // lấy ra các vị trí chiến thắng
@@ -60,7 +61,7 @@ const checkWinner = (board) => {
     }
   }
   return null; // trả về null nếu không có người chiến thắng
-};
+}
 // trả về giá trị của hàm checkWinner -- và dùng flat để làm phẳng mảng
 const winner = computed(() => checkWinner(board.value.flat()));
 
@@ -118,7 +119,9 @@ const ResetGame = () => {
           :key="y"
           @click="MakeMove(x, y)"
           :class="`border border-white bg-slate-100 shadow-2xl text-black h-24 w-24 rounded-2xl flex justify-center items-center hover:bg-slate-300 ${
-            cell === 'X' ? 'text-orange-500 text-6xl' : 'text-blue-500 text-6xl'
+            cell === 'X'
+              ? 'text-orange-500 text-6xl font-bold'
+              : 'text-blue-500 text-6xl font-bold'
           }`"
         >
           {{ cell === "X" ? "X" : cell === "O" ? "O" : "" }}
@@ -127,11 +130,15 @@ const ResetGame = () => {
     </div>
     <div v-if="winner">
       <div
-        class="flex flex-row w-auto space-y-3 rounded-xl text-4xl space-x-3 text-center justify-center items-center font-serif font-bold text-white"
+        class="flex flex-row justify-center items-center w-auto space-y-3 rounded-xl text-4xl space-x-3 font-serif font-bold text-white"
       >
-        <div>🎉Player</div>
-        <div class="text-red-500 text-6xl">{{ winner }}</div>
-        <div>Winner🎉</div>
+        <div class="flex justify-center items-center space-x-3">
+          <div>🎉Player</div>
+          <div class="text-red-500 text-6xl">
+            {{ winner }}
+          </div>
+          <div>Winner🎉</div>
+        </div>
         {{ showConfetti() }}
       </div>
       <div class="font-serif text-center pt-3 text-white text-3xl">
