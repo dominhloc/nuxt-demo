@@ -40,12 +40,13 @@ function MakeMove(x, y) {
 }
 
 function Reset() {
-  console.log("🚀 ~ Reset ~ Reset:", Reset);
+  //console.log("🚀 ~ Reset ~ Reset:", Reset);
   board.value = [
     ["", "", ""],
     ["", "", ""],
     ["", "", ""],
   ];
+  player.value = "O";
 }
 </script>
 

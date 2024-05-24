@@ -78,7 +78,7 @@ function ResetGame() {
   <div
     class="bg-sky-600 flex flex-col space-y-5 justify-center items-center h-screen w-screen"
   >
-    <div class="text-center text-6xl text-white font-serif">TIC TAC TOE</div>
+    <div class="text-center text-7xl text-white font-serif">TIC TAC TOE</div>
     <div
       class="text-3xl text-white font-serif flex justify-center items-center space-x-3"
     >
