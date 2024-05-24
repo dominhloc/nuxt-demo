@@ -76,7 +76,7 @@ function ResetGame() {
 
 <template>
   <div
-    class="bg-slate-700 flex flex-col space-y-5 justify-center items-center h-screen w-screen"
+    class="bg-sky-600 flex flex-col space-y-5 justify-center items-center h-screen w-screen"
   >
     <div class="text-center text-6xl text-white font-serif">TIC TAC TOE</div>
     <div
@@ -88,13 +88,13 @@ function ResetGame() {
       <div>Turn</div>
     </div>
 
-    <div class="flex flex-col">
-      <div v-for="(row, x) in board" :key="x" class="flex">
+    <div class="flex flex-col space-y-3">
+      <div v-for="(row, x) in board" :key="x" class="flex space-x-3">
         <div
           v-for="(cell, y) in row"
           :key="y"
           @click="MakeMove(x, y)"
-          :class="`border w-32 h-32 flex justify-center items-center bg-white hover:bg-slate-300 ${
+          :class="`border w-32 h-32 flex justify-center items-center rounded-2xl bg-white hover:bg-slate-300 ${
             cell === 'X'
               ? 'text-red-500 text-7xl font-bold'
               : 'text-blue-500 text-7xl font-bold'
