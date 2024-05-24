@@ -1,5 +1,5 @@
 <script setup>
-const player = ref("X");
+const player = ref("O");
 //
 const board = ref([
   ["", "", ""],
@@ -46,7 +46,7 @@ function Reset() {
     ["", "", ""],
     ["", "", ""],
   ];
-  player.value = "X";
+  player.value = "O";
 }
 </script>
 
