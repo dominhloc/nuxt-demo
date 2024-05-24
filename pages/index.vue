@@ -1,5 +1,4 @@
 <script setup>
-
 const player = ref("O");
 //
 const board = ref([
@@ -55,7 +54,14 @@ function Reset() {
     class="bg-slate-600 h-screen w-screen flex flex-col justify-center overflow-auto items-center space-y-8"
   >
     <h1 class="text-6xl font-serif text-yellow-200">TIC TAC TOE</h1>
-    <div class="text-white text-4xl font-serif">Player {{ player }}'s Turn</div>
+    <div
+      class="text-white flex justify-center items-center space-x-3 text-4xl font-serif"
+    >
+      <div>Player</div>
+      <div class="text-6xl text-yellow-200">{{ player }}</div>
+      's
+      <div>Turn</div>
+    </div>
 
     <div
       class="flex flex-col p-9 space-y-3 border-2 border-dashed border-yellow-400 rounded-xl"
@@ -76,8 +82,12 @@ function Reset() {
       </div>
     </div>
     <div v-if="winner">
-      <div class="text-yellow-400 font-serif text-7xl">
-        🎉Player {{ winner }} Wins🎉
+      <div
+        class="text-white font-serif text-5xl flex justify-center items-center space-x-3"
+      >
+        <div>🎉Player</div>
+        <div class="text-7xl text-yellow-200">{{ winner }}</div>
+        <div>Wins🎉</div>
       </div>
     </div>
 
