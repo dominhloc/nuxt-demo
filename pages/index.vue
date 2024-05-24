@@ -82,7 +82,7 @@ function Reset() {
 
     <div class="flex justify-center">
       <button
-        class="w-32 rounded-xl hover:bg-slate-500 text-2xl font-serif text-yellow-200 border-yellow-200 border-dashed font-bold pt-1"
+        class="w-32 rounded-xl hover:bg-slate-500 text-2xl font-serif text-yellow-200 border-yellow-200 border-2 border-dashed font-bold pt-1"
         @click="Reset"
       >
         Restart
