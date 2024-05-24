@@ -51,7 +51,7 @@ function Reset() {
 
 <template>
   <div
-    class="bg-slate-600 h-screen w-screen flex flex-col justify-center overflow-auto items-center space-y-7"
+    class="bg-slate-600 h-screen w-screen flex flex-col justify-center overflow-auto items-center space-y-8"
   >
     <h1 class="text-6xl font-serif text-yellow-200">TIC TAC TOE</h1>
     <div class="text-white text-4xl font-serif">Player {{ player }}'s Turn</div>
