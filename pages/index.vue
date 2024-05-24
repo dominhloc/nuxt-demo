@@ -1,4 +1,5 @@
 <script setup>
+
 const player = ref("O");
 //
 const board = ref([
