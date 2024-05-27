@@ -18,7 +18,7 @@ const board = ref([
 ]);
 // check các điều kiện chiến thắng
 
-//các điều kiện chiến thắng
+//các điều kiện chiến thắng 4x4
 const lines = [
   //dọc
   [0, 1, 2],
